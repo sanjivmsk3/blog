@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block color %}white{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row w-100 mx-auto mt-3">
+    <div class="col-2" style="position: fixed;">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="home">Home</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#add-post" role="tab" aria-controls="profile">Add Post</a>
+        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#My-Posts" role="tab" aria-controls="messages">My Posts<span class="badge bg-primary rounded-pill float-end">{{count}}</span></a>
+      </div>
+    </div>
+    <div class="col-10" style=" margin-left: 250px;">
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            {% for foo in con %}
+        <div class="card mb-2" style="max-width: 1050px;">
+            <div class="row g-0">
+            <div class="col-md-5">
+                <img src="{{ foo.image.url }}" width="430px" class="p-3" height="300px" alt="...">
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                <h5 class="card-title">{{ foo.title }}</h5>
+                <p class="card-text">{{ foo.description|truncatechars:350 }}.</p>
+                <p class="card-text">{{ foo.status }}</p>
+                <p class="card-text">{{ foo.user.username|capfirst }}</p>
+                <p class="card-text"><small class="text-muted">Last updated {{foo.date.time}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="add-post" role="tabpanel" aria-labelledby="list-profile-list" style="width: 40rem;">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header h5 text-center">Add post here</div>
+                    <div class="card-body">
+                      <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{add_form|crispy}}
+                        <div class="d-grid">
+                          <input class="btn btn-success mt-3" type="submit">
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="My-Posts" role="tabpanel" aria-labelledby="list-messages-list">
+          <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+            {% for ff in all_con %}
+        <div class="card mb-2" style="max-width: 1050px;">
+            <div class="row g-0">
+            <div class="col-md-5">
+                <img src="{{ ff.image.url }}" width="430px" class="p-3" height="300px" alt="...">
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                <h5 class="card-title">{{ ff.title }}</h5>
+                <p class="card-text">{{ ff.description|truncatechars:350 }}.</p>
+                <p class="card-text">{{ ff.status }}</p>
+                <p class="card-text">{{ ff.user.username|capfirst }}</p>
+                <p class="card-text"><small class="text-muted">Last updated {{ff.date.time}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

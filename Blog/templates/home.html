@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block color %}white{% endblock %}
+
+{% block content %}
+<div class="row mt-5">
+    <div class="col-lg-4 mx-auto">
+        <div class="card">
+            <div class="card-header display-6 text-center">LogIn</div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="" class="form-label">Username</label>
+                        <input type="text" name="username" minlength="8" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pass" class="form-label">Password</label>
+                        <input type="password" id='pass' name='password' class="form-control">
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>        
+    </div>
+</div>
+{% endblock %}
